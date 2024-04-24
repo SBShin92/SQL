@@ -138,6 +138,13 @@ SELECT
     upper(country_name) 나라이름
 FROM
     countries
+WHERE
+    country_id IN(
+        SELECT
+            country_id
+        FROM
+            locations
+    )
 ORDER BY
     1;
 
