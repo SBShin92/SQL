@@ -1,3 +1,3 @@
 select * from employees;
 
-select 3 + 4;
+select 3 + 7;
