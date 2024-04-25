@@ -397,6 +397,16 @@ SELECT
 FROM
     dual;
 
+-- DATE 연산 --
+SELECT
+    sysdate,
+    sysdate + 1,
+    sysdate - 1,
+    round(sysdate - TO_DATE('20120924', 'yyyymmdd'), 1),
+    sysdate + 48 / 24
+FROM
+    dual;
+
 -----------------------------------------------------------------
 
 -- Convert Format --
@@ -431,7 +441,7 @@ FROM
 -- 문자열을 DATE로 변환
 SELECT
     '2012-09-24 13:48:00',
-    TO_DATE('2012-09-24 13:48:00', 'yyyy-mm-dd hh24:mi:ss')
+    TO_DATE('2012-09-24 13시48:00', 'yyyy-mm-dd hh24:mi:ss')
 FROM
     dual;
 
@@ -442,3 +452,111 @@ SELECT
     to_number('$57,600', '$999,999')
 FROM
     dual;
+
+-----------------------------------------------------------------
+
+-- 기타 함수 --
+
+-- NVL --
+SELECT
+    first_name
+    || ' '
+    || last_name                    이름,
+    salary,
+    salary * nvl(commission_pct, 0)
+FROM
+    employees;
+
+SELECT
+    first_name
+    || ' '
+    || last_name                                     이름,
+    salary,
+    nvl2(commission_pct, salary * commission_pct, 0)
+FROM
+    employees;
+
+-----------------------------------------------------------------
+
+-- Conditional Expression --
+
+-- CASE문 --
+
+-- ad는 20%, sa는 10%, it는 8%, 나머지는 5% 보너스 주자.
+
+
+SELECT
+    first_name,
+    job_id,
+    salary,
+    CASE substr(lower(job_id), 1, 2)
+        WHEN 'ad' THEN
+            0.2 * salary
+        WHEN 'sa' THEN
+            0.1 * salary
+        WHEN 'it' THEN
+            0.08 * salary
+        ELSE
+            0.05 * salary
+    END        뽀나스
+FROM
+    employees;
+
+
+-- DECODE문 --
+select
+    FIRST_NAME,
+    job_id,
+    salary,
+    DECODE(SUBSTR(lower(JOB_ID), 1, 2),
+           'ad', salary * 0.2,
+           'sa', SALARY * 0.1,
+           'it', salary * 0.08,
+           salary * 0.05) 뽀내기
+FROM EMPLOYEES;
+
+-----------------------------------------------------------------
+
+-- ex --
+-- [연습] hr.employees
+--  직원의 이름, 부서, 팀을 출력하십시오
+--  팀은 코드로 결정하며 다음과 같이 그룹 이름을 출력합니다
+--  부서 코드가 10 ~ 30이면: 'A-GROUP'
+--  부서 코드가 40 ~ 50이면: 'B-GROUP'
+--  부서 코드가 60 ~ 100이면 : 'C-GROUP'
+--  나머지 부서는 : 'REMAINDER'
+
+SELECT FIRST_NAME || ' ' || LAST_NAME 이름,
+    DEPARTMENTS.DEPARTMENT_ID 부서,
+    CASE
+        WHEN DEPARTMENTS.DEPARTMENT_ID <= 30 THEN 'A-GROUP'
+        WHEN DEPARTMENTS.DEPARTMENT_ID <= 60 THEN 'B-GROUP'
+        WHEN DEPARTMENTS.DEPARTMENT_ID <= 100 THEN 'C-GROUP'
+    ELSE 'REMAINDER' END 팀
+FROM EMPLOYEES
+JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID = DEPARTMENTS.DEPARTMENT_ID
+ORDER BY 팀, 부서;
+
+
+SELECT FIRST_NAME || ' ' || LAST_NAME 이름,
+    DEPARTMENTS.DEPARTMENT_ID 부서,
+    DECODE(
+        SIGN(DEPARTMENTS.DEPARTMENT_ID - 30),
+        -1, 'A-GROUP',
+        0, 'A-GROUP',
+        DECODE(
+            SIGN(DEPARTMENTS.DEPARTMENT_ID - 60),
+            -1, 'B-GROUP',
+            0, 'B-GROUP',
+            DECODE(
+                SIGN(DEPARTMENTS.DEPARTMENT_ID - 100),
+                -1, 'C-GROUP',
+                0, 'C-GROUP',
+                'REMAINDER'
+            )
+        )
+    ) 팀
+FROM EMPLOYEES
+JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID = DEPARTMENTS.DEPARTMENT_ID
+ORDER BY 팀, 부서;
+
