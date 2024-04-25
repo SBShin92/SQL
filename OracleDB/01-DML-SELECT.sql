@@ -287,6 +287,7 @@ FROM
 ORDER BY
     1 ASC,
     4 DESC;
+
 -----------------------------------------------------------------
 
 -- 요약하자면
@@ -295,3 +296,149 @@ ORDER BY
 -- FROM 테이블목록
 -- WHERE 필터링조건
 -- ORDER BY 정렬조건;
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+-- 단일행 함수 --
+
+
+-- 문자열 --
+SELECT
+    first_name,
+    last_name,
+    concat(first_name, concat(' ', last_name)),
+    first_name
+    || ' '
+    || last_name
+FROM
+    employees;
+
+SELECT
+    lower(first_name),
+    upper(last_name),
+    lpad(first_name /*EXPR1*/, 20 /*N*/, '*' /*EXPR2*/ )
+FROM
+    employees;
+
+SELECT
+    '     oracle     ',
+    '*****database*****',
+    ltrim('     oracle     ')           트림좌,
+    rtrim('     oracle     ')           트림우,
+    ltrim('*****database*****', '*')    트림좌,
+    rtrim('*****database*****', '*')    트림우,
+    TRIM('*' FROM '*****database*****') 트림
+FROM
+    dual;
+
+SELECT
+    substr('oracle database', 8, 4)  substr,
+    substr('oracle database', -4, 4) "substr-",
+    length('oracle database')        length
+FROM
+    dual;
+
+-----------------------------------------------------------------
+
+-- 숫자 --
+SELECT
+    3.141592,
+    abs(-3.141592),
+    ceil(3.141592),
+    floor(3.141592),
+    round(3.5),
+    round(3.141592, 3),
+    trunc(3.5),
+    trunc(3.141592, 3)
+FROM
+    dual;
+
+SELECT
+    sign(-3.14159),
+    mod(7, 3) -- 주석
+FROM
+    dual;
+
+-----------------------------------------------------------------
+
+-- DATE --
+
+SELECT
+    *
+FROM
+    nls_session_parameters;
+
+SELECT
+    value
+FROM
+    nls_session_parameters
+WHERE
+    parameter = 'NLS_DATE_FORMAT';
+
+SELECT
+    sysdate
+FROM
+    dual;
+
+SELECT
+    sysdate
+FROM
+    employees;
+
+SELECT
+    sysdate,
+    add_months(sysdate, 2),
+    last_day(sysdate),
+ --    months_between(TO_DATE('120924', 'yymmdd'), sysdate),
+    next_day(sysdate, 1),
+    round(sysdate, 'mon'),
+    trunc(sysdate, 'yy')
+FROM
+    dual;
+
+-----------------------------------------------------------------
+
+-- Convert Format --
+
+-- DATE --
+SELECT
+    first_name,
+    to_char(hire_date, 'yyyy-mm-dd')
+FROM
+    employees;
+
+SELECT
+    sysdate,
+    to_char(sysdate, 'yyyy-mm-dd AMhh:hh:ss')
+FROM
+    dual;
+
+-- 지정 포맷보다 높은 값이면 #####... 으로 나온다.
+SELECT
+    to_char(30000000, 'L999,999,999.99')
+FROM
+    dual;
+
+SELECT
+    first_name
+    || ' '
+    || last_name                                                            이름,
+    to_char((salary + salary * nvl(commission_pct, 0)) * 12, '$999,999.99') 수당포함연봉
+FROM
+    employees;
+
+-- 문자열을 DATE로 변환
+SELECT
+    '2012-09-24 13:48:00',
+    TO_DATE('2012-09-24 13:48:00', 'yyyy-mm-dd hh24:mi:ss')
+FROM
+    dual;
+
+-- NUMBER --
+-- 문자열을 NUMBER로 변환
+SELECT
+    '$57,600',
+    to_number('$57,600', '$999,999')
+FROM
+    dual;
