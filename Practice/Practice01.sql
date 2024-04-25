@@ -165,4 +165,4 @@ SELECT
 FROM
     employees
 WHERE
-    hire_date <= TO_DATE('20151231', 'yyyymmdd');
+    hire_date < TO_DATE('20151231', 'yyyymmdd');
