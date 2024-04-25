@@ -79,7 +79,7 @@ SELECT
 FROM
     employees
 WHERE
-    salary BETWEEN 10000 AND 14000
+    salary >= 10000 AND salary < 14000
 ORDER BY
     salary DESC;
 
