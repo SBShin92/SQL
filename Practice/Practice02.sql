@@ -160,19 +160,19 @@ ORDER BY
 
 -- 문제10
 -- 아래회사는 보너스 지급을 위해 직원을 입사일 기준으로 나눌려고 합니다.
--- 입사일이 11/12/31일 이전이면 '창립맴버, 12년은 '12년입사’, 13년은 ‘13년입사’
+-- 입사일이 12/12/31일 이전이면 '창립맴버, 13년은 '13년입사’, 14년은 ‘14년입사’
 -- 이후입사자는 ‘상장이후입사’ optDate 컬럼의 데이터로 출력하세요.
 -- 정렬은 입사일로 오름차순으로 정렬합니다.
 
 SELECT
     hire_date,
     CASE
-        WHEN hire_date <= TO_DATE('11/12/31', 'rr/mm/dd') THEN
-            '창립멤버'
         WHEN hire_date <= TO_DATE('12/12/31', 'rr/mm/dd') THEN
-            '12년입사'
+            '창립멤버'
         WHEN hire_date <= TO_DATE('13/12/31', 'rr/mm/dd') THEN
             '13년입사'
+        WHEN hire_date <= TO_DATE('14/12/31', 'rr/mm/dd') THEN
+            '14년입사'
         ELSE
             '상장이후입사'
     END       "optDate"
