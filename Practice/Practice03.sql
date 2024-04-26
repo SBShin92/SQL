@@ -177,19 +177,19 @@ ORDER BY
 -- (2건)
 
 SELECT
-    emp.employee_id 사번,
-    first_name
+    jh.employee_id   사번,
+    emp.first_name
     || ' '
-    || last_name    "이름(풀네임)",
-    job_id          업무아이디,
-    start_date      시작일,
-    end_date        종료일
+    || emp.last_name "이름(풀네임)",
+    jh.job_id        업무아이디,
+    jh.start_date    시작일,
+    jh.end_date      종료일
 FROM
     job_history jh
     JOIN employees emp
-    USING (job_id)
+    ON jh.employee_id = emp.employee_id
 WHERE
-    job_id = 'AC_ACCOUNT';
+    jh.job_id = 'AC_ACCOUNT';
 
 -----------------------------------------------------------------
 
