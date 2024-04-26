@@ -235,4 +235,6 @@ FROM
     JOIN employees man
     ON emp.manager_id = man.employee_id
     LEFT OUTER JOIN departments dep
-    ON emp.department_id = dep.department_id;
+    ON emp.department_id = dep.department_id
+ORDER BY
+    dep.department_name DESC;
