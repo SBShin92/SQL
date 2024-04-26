@@ -131,10 +131,10 @@ ORDER BY
 
 SELECT
     emp.employee_id 사번,
-    emp.first_name 이름,
-    emp.hire_date 채용일,
-    man.first_name 매니저이름,
-    man.hire_date 매니저입사일
+    emp.first_name  이름,
+    emp.hire_date   채용일,
+    man.first_name  매니저이름,
+    man.hire_date   매니저입사일
 FROM
     employees emp
     JOIN employees man
@@ -152,15 +152,20 @@ WHERE
 -- (27건)
 
 SELECT
-    country_name 나라명,
-    country_id 나라아이디,
-    city 도시명,
-    location_id 도시아이디,
+    country_name    나라명,
+    country_id      나라아이디,
+    city            도시명,
+    location_id     도시아이디,
     department_name 부서명,
-    department_id 부서아이디
-FROM countries JOIN locations USING (country_id)
-    JOIN departments USING (location_id)
-order by country_name;
+    department_id   부서아이디
+FROM
+    countries
+    JOIN locations
+    USING (country_id)
+    JOIN departments
+    USING (location_id)
+ORDER BY
+    country_name;
 
 -----------------------------------------------------------------
 
@@ -175,10 +180,10 @@ SELECT
     emp.employee_id 사번,
     first_name
     || ' '
-    || last_name "이름(풀네임)",
-    job_id 업무아이디,
-    start_date 시작일,
-    end_date 종료일
+    || last_name    "이름(풀네임)",
+    job_id          업무아이디,
+    start_date      시작일,
+    end_date        종료일
 FROM
     job_history jh
     JOIN employees emp
