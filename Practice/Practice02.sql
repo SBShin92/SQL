@@ -79,11 +79,12 @@ ORDER BY
 -- 예) 2001-01-13 토요일
 
 -- 가장 먼저 입사한 사람?
+
 SELECT
     first_name
     || ' '
-    || last_name 이름,
-    hire_date    입사일
+    || last_name                         이름,
+    to_char(hire_date, 'yyyy-mm-dd day') 입사일
 FROM
     employees
 WHERE
