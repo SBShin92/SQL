@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="COUNTRIES" directorySegmentName="seg_0" id="2AC1D008-68E4-923F-229E-E27727546AE8">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:35:58 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+<schemaObject>46D88823-C8C0-E45F-4DCF-00EE25FBF2E4</schemaObject>
+<iotPctThreshold>50</iotPctThreshold>
+<logging>YES</logging>
+<organization>INDEX</organization>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>C320084D-031C-5543-36CD-01640BD5FAAD</segment>
+<tableSpace>3821A933-3629-7BFB-427C-1E305A1CE0AC</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="REGION_ID" id="1B9632A5-DD03-D57A-90D0-AD92066F84F0">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:35:59 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COUNTRY_NAME" id="585EE720-E4AA-03C7-2D93-B42E50463068">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:35:59 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COUNTRY_ID" id="5C9E23BE-17C4-B071-0183-84BE5C5D2616">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:35:59 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="COUNTR_REG_FK" id="474E4EEB-4089-5BBE-66C1-5B8BF7693896">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:36:02 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="COUNTRY_C_ID_PK" id="01AD5C60-D70A-9B71-F71E-152630978D2C">
+<createdBy>806-11</createdBy>
+<createdTime>2024-04-29 00:36:02 UTC</createdTime>
+<ownerDesignName>yogi</ownerDesignName>
+<schemaObject>46D88823-C8C0-E45F-4DCF-00EE25FBF2E4</schemaObject>
+<segment>C320084D-031C-5543-36CD-01640BD5FAAD</segment>
+<tableSpace>3821A933-3629-7BFB-427C-1E305A1CE0AC</tableSpace>
+<indexSegment>C320084D-031C-5543-36CD-01640BD5FAAD</indexSegment>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>
