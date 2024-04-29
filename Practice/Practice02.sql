@@ -29,7 +29,7 @@ FROM
 -- 예) 2014년 07월 10일
 
 SELECT
-    MAX(hire_date) "마지막 신입사원"
+    to_char(MAX(hire_date), 'yyyy"년" mm"월" dd"일"') "마지막 신입사원"
 FROM
     employees;
 
