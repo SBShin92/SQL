@@ -103,7 +103,8 @@ FROM
         WHERE
             lower(first_name) = 'steven'
             AND lower(last_name) = 'king'
-    ) USING (DEPARTMENT_ID);
+    )
+    USING (department_id);
 
 ---------------------------------------------------------------------------
 
@@ -190,8 +191,8 @@ ORDER BY
 -- (19건)
 
 SELECT
-    job_title,
-    SUM(salary) sum_sal
+    job_title   업무,
+    SUM(salary) "연봉의 총합"
 FROM
     employees
     JOIN jobs
@@ -200,19 +201,18 @@ GROUP BY
     job_id,
     job_title
 ORDER BY
-    sum_sal DESC;
-
+    "연봉의 총합" DESC;
 
 -- 조금 더 스마트하게
-SELECT DISTINCT
-    job_title,
-    SUM(salary) over (partition by job_id, job_title)
+SELECT
+    DISTINCT job_title                                         업무,
+    SUM(salary) OVER (PARTITION BY job_id, job_title) "연봉의 총합"
 FROM
     employees
     JOIN jobs
-    USING (job_id);
+    USING (job_id)
 ORDER BY
-    sum_sal DESC;
+    "연봉의 총합" DESC;
 
 ---------------------------------------------------------------------------
 
