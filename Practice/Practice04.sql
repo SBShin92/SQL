@@ -63,6 +63,7 @@ ORDER BY
 -- (state_province), 나라아이디(country_id) 를 출력하세요
 -- (1건)
 
+-- 쉽게쉽게
 SELECT
     location_id,
     street_address,
@@ -80,27 +81,29 @@ WHERE
     lower(first_name) = 'steven'
     AND lower(last_name) = 'king';
 
--- SELECT
---     location_id,
---     street_address,
---     postal_code,
---     city,
---     state_province,
---     country_id
--- FROM
---     locations
---     JOIN (
---         SELECT
---             first_name,
---             last_name,
---             department_id
---         FROM
---             employees
---         WHERE
---             lower(first_name) = 'steven'
---             AND lower(last_name) = 'king';
-
--- )
+-- 굳이 어렵게
+SELECT
+    location_id,
+    street_address,
+    postal_code,
+    city,
+    state_province,
+    country_id
+FROM
+    locations
+    JOIN departments
+    USING (location_id)
+    JOIN (
+        SELECT
+            first_name,
+            last_name,
+            department_id
+        FROM
+            employees
+        WHERE
+            lower(first_name) = 'steven'
+            AND lower(last_name) = 'king'
+    ) USING (DEPARTMENT_ID);
 
 ---------------------------------------------------------------------------
 
