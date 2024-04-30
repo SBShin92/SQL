@@ -202,6 +202,18 @@ GROUP BY
 ORDER BY
     sum_sal DESC;
 
+
+-- 조금 더 스마트하게
+SELECT DISTINCT
+    job_title,
+    SUM(salary) over (partition by job_id, job_title)
+FROM
+    employees
+    JOIN jobs
+    USING (job_id);
+ORDER BY
+    sum_sal DESC;
+
 ---------------------------------------------------------------------------
 
 -- 문제7.
