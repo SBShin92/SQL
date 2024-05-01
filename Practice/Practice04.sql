@@ -128,7 +128,8 @@ WHERE
         WHERE
             job_id = 'ST_MAN'
     )
-ORDER BY 급여 DESC;
+ORDER BY
+    급여 DESC;
 
 ---------------------------------------------------------------------------
 
@@ -235,6 +236,25 @@ WHERE
         WHERE
             department_id = outer.department_id
     );
+
+SELECT
+    employee_id 직원번호,
+    first_name  이름,
+    salary      급여
+FROM
+    employees outer
+    JOIN (
+        SELECT
+            department_id,
+            AVG(salary)   avg_sal
+        FROM
+            employees
+        GROUP BY
+            department_id
+    ) inner
+    ON outer.department_id = inner.department_id
+WHERE
+    outer.salary > inner.avg_sal;
 
 ---------------------------------------------------------------------------
 
