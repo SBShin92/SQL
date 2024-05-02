@@ -67,31 +67,26 @@ ORDER BY
 -- (9건)
 
 SELECT
-    man.first_name,
-    emp.*
+    *
 FROM
     (
         SELECT
-            DISTINCT manager_id,
-            round(avg(salary) OVER (PARTITION BY manager_id), 0) "매니저별 평균급여",
-            MIN(salary) OVER (PARTITION BY manager_id)           "매니저별 최소급여",
-            MAX(salary) OVER (PARTITION BY manager_id)           "매니저별 최대급여"
+            DISTINCT man.employee_id,
+            man.first_name,
+            round(avg(emp.salary) OVER (PARTITION BY emp.manager_id), 0) "매니저별 평균급여",
+            MIN(emp.salary) OVER (PARTITION BY emp.manager_id)           "매니저별 최소급여",
+            MAX(emp.salary) OVER (PARTITION BY emp.manager_id)           "매니저별 최대급여"
         FROM
-            (
-                SELECT
-                    *
-                FROM
-                    employees
-                WHERE
-                    hire_date >= TO_DATE('20160101', 'yyyymmdd')
-            )
-    )         emp
-    JOIN employees man
-    ON emp.manager_id = man.employee_id
+            employees emp
+            JOIN employees man
+            ON emp.manager_id = man.employee_id
+        WHERE
+            emp.hire_date >= TO_DATE('20160101', 'yyyymmdd')
+    )
 WHERE
-    emp."매니저별 평균급여" >= 5000
+    "매니저별 평균급여" >= 5000
 ORDER BY
-    emp."매니저별 평균급여" DESC;
+    "매니저별 평균급여" DESC;
 
 ------------------------------------------------------------
 -- 문제4.
