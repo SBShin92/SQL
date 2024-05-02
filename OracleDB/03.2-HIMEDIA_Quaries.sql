@@ -49,11 +49,44 @@ CREATE TABLE emp_it AS (
     WHERE job_id LIKE 'IT%'
 );
 
-select * from emp_it;
+SELECT *
+FROM emp_it;
+
 describe emp_it;
+
+desc book;
 
 DROP TABLE emp_it;
 
-alter table emp_it add (hp VARCHAR2(20));
+ALTER TABLE emp_it ADD (hp VARCHAR2(20));
 
-alter table emp_it set unused (hp);
+ALTER TABLE emp_it SET UNUSED (hp);
+
+SELECT *
+FROM user_role_privs;
+
+CREATE TABLE author (
+    author_id NUMBER(10),
+    author_name VARCHAR2(100) NOT NULL,
+    author_desc VARCHAR2(500),
+    PRIMARY KEY (author_id)
+);
+
+desc author;
+
+ALTER TABLE book MODIFY ( book_id NUMBER(10));
+ALTER TABLE book ADD (CONSTRAINT c_book_pk PRIMARY KEY (book_id));
+ALTER TABLE book ADD ( CONSTRAINT c_author_id_fk FOREIGN KEY (author_id) REFERENCES author(author_id));
+
+desc book;
+
+SELECT object_name, object_type FROM user_objects;
+
+SELECT
+    constraint_name,
+    constraint_type,
+    search_condition,
+    table_name
+FROM
+    user_constraints
+WHERE TABLE_NAME = 'BOOK';
