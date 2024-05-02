@@ -210,7 +210,8 @@ WHERE
 -- 평균 급여(salary)가 가장 높은 부서는?
 
 SELECT
-    department_id, department_name
+    department_id,
+    department_name
 FROM
     (
         SELECT
@@ -227,8 +228,9 @@ FROM
                 GROUP BY
                     department_id
             )
-    )
-    JOIN departments USING (department_id)
+    )           
+    JOIN departments
+    USING (department_id)
 WHERE
     max_sal = 1;
 
@@ -238,28 +240,33 @@ WHERE
 -- 평균 급여(salary)가 가장 높은 지역은?
 
 SELECT
-    region_id, region_name
+    region_id,
+    region_name
 FROM
     (
         SELECT
-            department_id,
+            location_id,
             avg_sal,
             row_number() OVER (ORDER BY avg_sal DESC) max_sal
         FROM
             (
                 SELECT
-                    department_id,
-                    AVG(salary)   avg_sal
+                    location_id,
+                    AVG(salary) avg_sal
                 FROM
                     employees
+                    JOIN departments
+                    USING (department_id)
                 GROUP BY
-                    department_id
+                    location_id
             )
-    )
-    JOIN departments USING (department_id)
-    JOIN locations USING (location_id)
-    JOIN countries USING (country_id)
-    JOIN regions USING (region_id)
+    )         
+    JOIN locations
+    USING (location_id)
+    JOIN countries
+    USING (country_id)
+    JOIN regions
+    USING (region_id)
 WHERE
     max_sal = 1;
 
@@ -268,27 +275,30 @@ WHERE
 -- 문제10.
 -- 평균 급여(salary)가 가장 높은 업무는?
 
-SELECT DISTINCT
-    job_id, job_title
+SELECT
+    DISTINCT job_id,
+    job_title
 FROM
     (
         SELECT
-            department_id,
+            job_id,
+            job_title,
             avg_sal,
             row_number() OVER (ORDER BY avg_sal DESC) max_sal
         FROM
             (
                 SELECT
-                    department_id,
-                    AVG(salary)   avg_sal
+                    job_id,
+                    job_title,
+                    AVG(salary) avg_sal
                 FROM
                     employees
+                    JOIN jobs
+                    USING (job_id)
                 GROUP BY
-                    department_id
+                    job_id,
+                    job_title
             )
     )
-    JOIN employees USING (department_id)
-    JOIN jobs USING (job_id)
 WHERE
     max_sal = 1;
-    
