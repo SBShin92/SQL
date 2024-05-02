@@ -240,3 +240,189 @@ SELECT
 FROM
     user_constraints
 WHERE TABLE_NAME = 'BOOK';
+
+-- HIMEDIA -----------------------------------------------
+-- INSERT
+-- 작가테이블 확인
+SELECT
+    *
+FROM
+    author;
+
+TRUNCATE TABLE author;
+
+-- 작가 추가 (묵시적 방법)
+INSERT INTO author VALUES(
+    1,
+    '박경리',
+    '토지 작가'
+);
+
+-- 작가 추가 (명시적 방법)
+INSERT INTO author (
+    author_id,
+    author_name
+) VALUES (
+    2,
+    '김영하'
+);
+
+-- 키 값만 맞으면 순서는 상관없다.
+INSERT INTO author (
+    author_name,
+    author_id,
+    author_desc
+) VALUES(
+    '류츠신',
+    3,
+    '삼체 작가'
+);
+
+-- DML은 트랜잭션 대상이기 때문에 롤백 가능하다.
+ROLLBACK;
+
+-- COMMIT
+COMMIT;
+
+-- UPDATE 이렇게 쓰면 ㅈ된거임
+UPDATE author
+SET author_desc = '알쓸신잡 출연';
+
+-- WHERE 조건 꼭 쓰기
+UPDATE author
+SET author_desc = '알쓸신잡 출연';
+WHERE author_name = '김영하';
+
+-- HIMEDIA -----------------------------------------------
+-- INSERT
+-- 작가테이블 확인
+SELECT
+    *
+FROM
+    author;
+
+TRUNCATE TABLE author;
+
+-- 작가 추가 (묵시적 방법)
+INSERT INTO author VALUES(
+    1,
+    '박경리',
+    '토지 작가'
+);
+
+-- 작가 추가 (명시적 방법)
+INSERT INTO author (
+    author_id,
+    author_name
+) VALUES (
+    2,
+    '김영하'
+);
+
+-- 키 값만 맞으면 순서는 상관없다.
+INSERT INTO author (
+    author_name,
+    author_id,
+    author_desc
+) VALUES(
+    '류츠신',
+    3,
+    '삼체 작가'
+);
+
+-- DML은 트랜잭션 대상이기 때문에 롤백 가능하다.
+ROLLBACK;
+
+-- COMMIT
+COMMIT;
+
+-- HIMEDIA ------------------------------------------------------------
+
+-- UPDATE
+-- UPDATE 이렇게 쓰면 ㅈ된거임
+UPDATE author
+SET
+    author_desc = '알쓸신잡 출연';
+
+-- WHERE 조건 꼭 쓰기
+UPDATE author
+SET
+    author_desc = '알쓸신잡 출연';
+
+WHERE AUTHOR_NAME = '김영하';
+
+-- HIMEDIA ------------------------------------------------------------
+
+-- hr에서 정보 가져와서 테이블 생성
+CREATE TABLE emp123 AS (
+    SELECT
+        *
+    FROM
+        hr.employees
+    WHERE
+        department_id IN (10, 20, 30)
+);
+
+-- 확인
+SELECT * FROM emp123;
+
+
+-- JOB_ID MK_로 시작하는 직원 삭제
+DELETE FROM emp123 WHERE job_id LIKE 'MK_%';
+
+-- 다 지워봐
+DELETE FROM emp123;
+
+-- 확인
+SELECT * FROM emp123;
+
+-- 롤백
+ROLLBACK;
+
+-- HIMEDIA ------------------------------------------------------------
+
+-- Transaction
+CREATE TABLE t_test (
+    log_text VARCHAR2(100)
+);
+
+SELECT * FROM t_test;
+
+INSERT INTO t_test VALUES('트랜잭션 시작');
+INSERT INTO t_test VALUES('데이터 INSERT');
+
+-- 세이브포인트 설정
+SAVEPOINT sp1;
+
+-- 데이터 넣고 세이브포인트로 롤백해보기
+INSERT INTO t_test Values('데이터 2 INSERT');
+SELECT * FROM t_test;
+ROLLBACK TO sp1;
+SELECT * FROM t_test;
+
+-- 다시 데이터 넣고 세이브
+INSERT INTO t_test Values('데이터 2 INSERT');
+SAVEPOINT sp2;
+SELECT * FROM t_test;
+
+-- 잘못 넣어버렸네
+UPDATE t_test SET log_text = '업데이트';
+SELECT * FROM t_test;
+ROLLBACK TO sp2;
+SELECT * FROM t_test;
+
+-- sp1으로 돌아가고나면 sp2로 못돌아감
+ROLLBACK TO sp1;
+-- ROLLBACK TO sp2;
+
+-- 데이터 다른거 넣어보자
+INSERT INTO t_test VALUES('데이터 3 INSERT');
+SELECT * FROM t_test;
+
+-- 커밋 (트랜잭션 종료)
+COMMIT;
+SELECT * FROM t_test;
+
+-- 롤백 안돼~
+ROLLBACK;
+SELECT * FROM t_test;
