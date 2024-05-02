@@ -67,35 +67,38 @@ ORDER BY
 -- (9건)
 
 SELECT
-    DISTINCT *
+    man.first_name,
+    emp.*
 FROM
     (
         SELECT
-            mng.employee_id                                      "매니저 아이디",
-            mng.first_name                                       "매니저 이름",
-            round(avg(mng.salary) OVER (ORDER BY mng.salary), 1) "매니저 평균급여",
-            MIN(mng.salary) OVER (ORDER BY mng.salary)           "매니저 최소급여",
-            MAX(mng.salary) OVER (ORDER BY mng.salary)           "매니저 최대급여"
+            DISTINCT manager_id,
+            round(avg(salary) OVER (PARTITION BY manager_id), 0) "매니저별 평균급여",
+            MIN(salary) OVER (PARTITION BY manager_id)           "매니저별 최소급여",
+            MAX(salary) OVER (PARTITION BY manager_id)           "매니저별 최대급여"
         FROM
-            employees emp
-            JOIN employees mng
-            ON emp.manager_id = mng.employee_id
-        WHERE
-            mng.hire_date >= TO_DATE('20150101', 'yyyymmdd')
-    )
+            (
+                SELECT
+                    *
+                FROM
+                    employees
+                WHERE
+                    hire_date >= TO_DATE('20160101', 'yyyymmdd')
+            )
+    )         emp
+    JOIN employees man
+    ON emp.manager_id = man.employee_id
 WHERE
-    "매니저 평균급여" >= 5000
+    emp."매니저별 평균급여" >= 5000
 ORDER BY
-    "매니저 평균급여" DESC;
+    emp."매니저별 평균급여" DESC;
 
 ------------------------------------------------------------
-
 -- 문제4.
 -- 각 사원(employee)에 대해서 사번(employee_id), 이름(first_name), 부서명
 -- (department_name), 매니저(manager)의 이름(first_name)을 조회하세요.
 -- 부서가 없는 직원(Kimberely)도 표시합니다.
 -- (106명)
-
 SELECT
     emp.employee_id     "사번",
     emp.first_name      "이름",
