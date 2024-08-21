@@ -1,1 +1,2 @@
-# SQL_Practice
+# SQL
+오라클 XE를 이용하여 SQL 기초 및 예제들을 학습해본다.
